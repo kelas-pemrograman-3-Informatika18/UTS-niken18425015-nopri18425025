@@ -1,14 +1,11 @@
 <template>
-<q-page>
-  <div class="q-pa-md" >
-    <q-form
-            class="q-mt-md">
-<q-table
+  <q-page padding>
+    <q-table
       title="Jadwal"
       :data="data"
       :columns="columns"
       row-key="name"
-      class="bg-light-blue-2"
+       class="bg-light-blue-2"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -27,36 +24,30 @@
           <q-td key="sks" :props="props">
             {{ props.row.sks }}
           </q-td>
-          <q-td key="kelas" :props="props">
-            {{ props.row.kelas }}
-          </q-td>
           <q-td key="aksi" :props="props">
             <div class="row">
               <div class="col">
-                <q-btn label="Pilih" @click="confirm(props.row.kode)" color="amber" unelevated></q-btn>
+                <q-btn label="Hapus" color="negative" @click="confirm(props.row.kode)" icon="delete" unelevated></q-btn>
               </div>
             </div>
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    </q-form>
-  </div>
-
-</q-page>
+        </q-page>
 </template>
 
 <script>
 export default {
+  name: 'PageEditjadwal',
   data () {
     return {
-      selected: [],
       columns: [
         {
           name: 'kode',
           required: true,
           label: 'Kode Mata Kuliah',
-          align: 'center',
+          align: 'left',
           field: 'kode',
           sortable: true
         },
@@ -64,10 +55,11 @@ export default {
         { name: 'dosen', align: 'center', label: 'Dosen', field: 'dosen', sortable: true },
         { name: 'waktu', align: 'center', label: 'Waktu', field: 'waktu', sortable: true },
         { name: 'sks', align: 'center', label: 'SKS', field: 'sks' },
-        { name: 'kelas', align: 'center', label: 'Kelas', field: 'kelas' },
         { name: 'aksi', label: 'Aksi', field: 'aksi', align: 'center' }
       ],
-      data: []
+
+      data: [
+      ]
     }
   },
   created () {
@@ -75,7 +67,7 @@ export default {
   },
   methods: {
     getData () {
-      this.$axios.get('jadwal/tampil')
+      this.$axios.get('kegiatan/tampil')
         .then(res => {
           if (res.data.sukses) {
             this.data = res.data.data
@@ -87,38 +79,25 @@ export default {
           }
         })
     },
-    confirm (kodeb) {
+    confirm (kode) {
       this.$q.dialog({
         title: 'Confirm',
-        message: 'Apakah Anda Yakin Menambah Data Ini?',
+        message: 'Apakah Anda Yakin Menghapus Data Ini?',
         cancel: true,
         persistent: true
       }).onOk(() => {
-        console.log(kodeb)
-        this.$axios.get('jadwal/tampilsingle/' + kodeb)
-          .then(res => {
-            console.log(res)
+        this.$axios.delete('kegiatan/delete/' + kode)
+          .then((res) => {
             if (res.data.sukses) {
-              console.log(res.data)
-              this.$axios.post('kegiatan/input', {
-                kode: res.data.data.kode,
-                matkul: res.data.data.matkul,
-                dosen: res.data.data.dosen,
-                waktu: res.data.data.waktu,
-                sks: res.data.data.sks,
-                kelas: res.data.data.kelas
-              }).then((res) => {
-                if (res.data.sukses) {
-                  this.$q.notify({
-                    type: 'positive',
-                    message: res.data.pesan
-                  })
-                } else {
-                  this.$q.notify({
-                    type: 'negative',
-                    message: res.data.pesan
-                  })
-                }
+              this.$q.notify({
+                type: 'positive',
+                message: res.data.pesan
+              })
+              this.getData()
+            } else {
+              this.$q.notify({
+                type: 'negative',
+                message: res.data.pesan
               })
             }
           })

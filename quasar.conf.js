@@ -80,7 +80,9 @@ module.exports = function (/* ctx */) {
         'QMenu',
         'QDialog',
         'QCardSection',
-        'QAvatar'
+        'QAvatar',
+        'QBtnGroup',
+        'QImg'
       ],
 
       directives: [
@@ -90,7 +92,8 @@ module.exports = function (/* ctx */) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Dialog'
       ]
     },
 

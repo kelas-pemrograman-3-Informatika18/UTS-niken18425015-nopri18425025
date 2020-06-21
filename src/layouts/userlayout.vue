@@ -28,7 +28,7 @@
       </q-card>
     </q-dialog>
         </q-btn>
-        <q-btn icon="logout" label="Logout" push color="red-14" class="q-mr-xs" @click="confirm" />
+        <q-btn to="/" type="submit" icon="logout" label="Logout" push color="red-14" class="q-mr-xs" @click="confirm" />
       </q-toolbar>
         <q-toolbar inset>
       </q-toolbar>
@@ -49,36 +49,29 @@
         >
           Menu
         </q-item-label>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'homeadm'}">
+        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'home'}">
           <q-item-section avatar>
-            <q-icon name="dashboard" />
+            <q-icon name="home" />
           </q-item-section>
+
           <q-item-section>
           Home
           </q-item-section>
         </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'tamppiljadwal'}">
+        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'pilihJadwal'}">
           <q-item-section avatar>
-            <q-icon name="schedule" />
+            <q-icon name="check" />
           </q-item-section>
           <q-item-section>
-          Lihat Jadwal
+          Pilih Jadwal
           </q-item-section>
         </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'editJadwal'}">
+        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'deleteJadwal'}">
           <q-item-section avatar>
-            <q-icon name="edit" />
+            <q-icon name="delete" />
           </q-item-section>
           <q-item-section>
-          Edit Jadwal
-          </q-item-section>
-        </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'inputJadwal'}">
-          <q-item-section avatar>
-            <q-icon name="input" />
-          </q-item-section>
-          <q-item-section>
-          Input Jadwal
+          Hapus Jadwal
           </q-item-section>
         </q-item>
       </q-list>
@@ -105,7 +98,8 @@ export default {
       })
     }
   },
-  name: 'MainLayout',
+
+  name: 'userlayout',
   data () {
     return {
       leftDrawerOpen: true,

@@ -24,6 +24,9 @@
           <q-td key="sks" :props="props">
             {{ props.row.sks }}
           </q-td>
+          <q-td key="kelas" :props="props">
+            {{ props.row.kelas }}
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -35,6 +38,7 @@ export default {
   name: 'PageHome',
   data () {
     return {
+      centerDialogOpen: true,
       columns: [
         {
           name: 'kode',
@@ -47,46 +51,29 @@ export default {
         { name: 'matkul', align: 'center', label: 'Mata Kuliah', field: 'matkul', sortable: true },
         { name: 'dosen', align: 'center', label: 'Dosen', field: 'dosen', sortable: true },
         { name: 'waktu', align: 'center', label: 'Waktu', field: 'waktu', sortable: true },
-        { name: 'sks', align: 'center', label: 'SKS', field: 'sks' }
+        { name: 'sks', align: 'center', label: 'Sks', field: 'sks', sortable: true },
+        { name: 'kelas', align: 'center', label: 'Kelas', field: 'kelas' }
       ],
 
-      data: [
-        {
-          kode: 'K001',
-          matkul: 'Interaksi Manusia dan Komputer',
-          dosen: 'Ahmad Cucus',
-          waktu: 'Senin, 08.00-10.40',
-          sks: '3'
-        },
-        {
-          kode: 'K002',
-          matkul: 'Sistem Operasi',
-          dosen: 'Arnes Yuli Vandika',
-          waktu: 'Selasa, 08.00-10.40',
-          sks: '3'
-        },
-        {
-          kode: 'K003',
-          matkul: 'Entrepreneurship',
-          dosen: 'Fenty Ariani',
-          waktu: 'Selasa, 13.00-14.40',
-          sks: '2'
-        },
-        {
-          kode: 'K004',
-          matkul: 'Sistem Keamanan Komputer',
-          dosen: 'Adi Wijaya',
-          waktu: 'Rabu, 08.00-10.40',
-          sks: '3'
-        },
-        {
-          kode: 'K005',
-          matkul: 'Teori Bahasa Forma & otomata',
-          dosen: 'Wamiliana',
-          waktu: 'kamis, 08.00-10.40',
-          sks: '3'
-        }
-      ]
+      data: []
+    }
+  },
+  created () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      this.$axios.get('kegiatan/tampil')
+        .then(res => {
+          if (res.data.sukses) {
+            this.data = res.data.data
+          } else {
+            this.$q.notify({
+              type: 'negative',
+              message: res.data.pesan
+            })
+          }
+        })
     }
   }
 }

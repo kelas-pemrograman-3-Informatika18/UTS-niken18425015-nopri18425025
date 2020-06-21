@@ -2,7 +2,7 @@
   <q-page padding class="bg-grey-4">
     <q-toolbar class="bg-indigo-6 text-white q-pa-md ">
       <q-toolbar-title class="text-h4">
-        Input Jadwal
+        Update Jadwal
       </q-toolbar-title>
     </q-toolbar>
     <q-card class="my-card bg-white" >
@@ -19,7 +19,7 @@
           <q-input label="Waktu" v-model="waktu" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan Waktu']"></q-input>
           <q-input label="SKS" v-model="sks" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan SKS']"></q-input>
           <q-input label="Kelas" v-model="kelas" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan Kelas']"></q-input>
-          <q-btn type="submit" label="Input" color="indigo-10" unelevated></q-btn>
+          <q-btn type="submit" label="Update" color="indigo-10" unelevated></q-btn>
           <q-btn type="reset" label="Reset" color="indigo-10" flat unelevated></q-btn>
           </div>
         </q-form>
@@ -39,16 +39,32 @@ export default {
       kelas: null
     }
   },
+  created () {
+    this.getData()
+  },
   methods: {
+    getData () {
+      this.$axios.get('jadwal/tampilsingle/' + this.$route.params.kode)
+        .then(res => {
+          const data = res.data
+          this.kode = data.kode
+          this.matkul = data.matkul
+          this.dosen = data.dosen
+          this.waktu = data.waktu
+          this.sks = data.sks
+          this.kelas = data.kelas
+        })
+    },
     onReset () {
       this.kode = null
       this.matkul = null
       this.dosen = null
       this.waktu = null
       this.sks = null
+      this.kelas = null
     },
     onSubmit () {
-      this.$axios.post('jadwal/input', {
+      this.$axios.put('jadwal/edit/' + this.$route.params.kode, {
         kode: this.kode,
         matkul: this.matkul,
         dosen: this.dosen,

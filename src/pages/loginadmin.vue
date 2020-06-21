@@ -14,26 +14,39 @@
       <q-input
         standout="bg-primary text-white"
         class="col q-gutter-md q-mr-md"
-        v-model="npm"
-        label="Masukkan NPM"
+        v-model="username"
+        label="Masukkan Username"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Isi NPM Anda!!!']"
-      />
+        :rules="[ val => val && val.length > 0 || 'Isi Username Anda!!!']"
+      >
+      <template v-slot:prepend>
+          <q-icon name="person" />
+        </template>
+      </q-input>
 
       <q-input
-        standout="bg-primary text-white"
+        standout="bg-primary text-white" :type="isPwd ? 'password' : 'text'"
         class="col q-gutter-md q-mr-md"
-        type="password"
         v-model="password"
         label="Insert your password"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Isi password Anda!!!']"
-      />
+      >
+      <template v-slot:prepend>
+          <q-icon name="vpn_key" />
+      </template>
+      <template v-slot:append>
+          <q-icon
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+      </template>
+      </q-input>
 
       <div class="q-ml-xl q-mt-sm q-mb-sm">
         <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-        <q-btn to= "/register" label="register" type="register" color="blue" />
+        <q-btn to="/" label="Back" type="reset" color="primary" flat class="q-ml-sm" />
       </div>
         </q-form>
         </q-card>
@@ -44,18 +57,19 @@
 export default {
   data () {
     return {
-      npm: null,
-      password: null
+      username: null,
+      password: '',
+      isPwd: true
     }
   },
   methods: {
     onSubmit () {
-      this.$axios.post('user/login', {
-        npm: this.npm,
+      this.$axios.post('admin/loginadmin', {
+        username: this.username,
         password: this.password
       }).then(res => {
         if (res.data.sukses) {
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: 'homeadm' })
         } else {
           this.$q.notify({
             type: 'negative',
@@ -65,8 +79,6 @@ export default {
       })
     },
     onReset () {
-      this.npm = null
-      this.password = null
     },
     onRegister () {
     }
