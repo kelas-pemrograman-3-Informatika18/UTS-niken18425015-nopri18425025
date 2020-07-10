@@ -1,16 +1,26 @@
 <template>
-  <q-page padding class="bg-grey-4">
-    <q-toolbar class="bg-indigo-6 text-white q-pa-md ">
-      <q-toolbar-title class="text-h4">
-        Input Jadwal
-      </q-toolbar-title>
-    </q-toolbar>
-    <q-card class="my-card bg-white" >
-        <q-card-section class="q-gutter-md" >
+  <q-page padding>
+    <div class="row q-mb-md col-gutter-md">
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <div class="row">
+          <div class="col-auto">
+            <div class="left"></div>
+            </div>
+          <div class="col">
+            <q-banner inline-actions class="text-blue-grey-14">
+              <div class="text-h6">Update Jadwal</div>
+              <div>Pilih jadwal yang ingin diubah</div>
+            </q-banner>
+          </div>
+        </div>
+      </div>
+    </div>
+    <q-card flat>
+        <q-card-section class="row" >
         <q-form
         @submit="onSubmit"
         @reset="onReset"
-        class="q-mt-md"
+        class="q-col-gutter-md q-col-lg-6 col-md-6 col-xs-12"
         >
         <div class="q-ml-xl q-mt-sm q-mb-sm" >
           <q-input label="Kode Mata Kuliah" v-model="kode" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan kodenya']"></q-input>
@@ -20,7 +30,7 @@
           <q-input label="SKS" v-model="sks" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan SKS']"></q-input>
           <q-input label="Kelas" v-model="kelas" filled :rules="[ val => val && val.length > 0 || 'Tolong masukkan Kelas']"></q-input>
           <q-btn type="submit" label="Input" color="indigo-10" unelevated></q-btn>
-          <q-btn type="reset" label="Reset" color="indigo-10" flat unelevated></q-btn>
+          <q-btn type="reset" label="Reset" color="indigo-10" flat unelevated class="q-ml-md"></q-btn>
           </div>
         </q-form>
       </q-card-section>
@@ -73,3 +83,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.left {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(46, 58, 216);
+}
+</style>

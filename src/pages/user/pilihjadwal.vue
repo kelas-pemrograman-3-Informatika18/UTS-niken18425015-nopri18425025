@@ -1,8 +1,21 @@
 <template>
-<q-page>
-  <div class="q-pa-md" >
-    <q-form
-            class="q-mt-md">
+<q-page padding>
+  <div class="row q-mb-md col-gutter-md">
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <div class="row">
+          <div class="col-auto">
+            <div class="left"></div>
+            </div>
+          <div class="col">
+            <q-banner inline-actions class="text-blue-grey-14">
+              <div class="text-h6">Pilih Jadwal</div>
+              <div>Silahkan Pilih Jadwal Yang Ingin Anda Ambil</div>
+            </q-banner>
+          </div>
+        </div>
+      </div>
+    </div>
+    <q-card flat>
 <q-table
       title="Jadwal"
       :data="data"
@@ -40,8 +53,7 @@
         </q-tr>
       </template>
     </q-table>
-    </q-form>
-  </div>
+    </q-card>
 
 </q-page>
 </template>
@@ -94,12 +106,9 @@ export default {
         cancel: true,
         persistent: true
       }).onOk(() => {
-        console.log(kodeb)
         this.$axios.get('jadwal/tampilsingle/' + kodeb)
           .then(res => {
-            console.log(res)
             if (res.data.sukses) {
-              console.log(res.data)
               this.$axios.post('kegiatan/input', {
                 kode: res.data.data.kode,
                 matkul: res.data.data.matkul,
@@ -127,3 +136,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.left {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(3, 6, 51);
+}
+</style>

@@ -82,7 +82,8 @@ module.exports = function (/* ctx */) {
         'QCardSection',
         'QAvatar',
         'QBtnGroup',
-        'QImg'
+        'QImg',
+        'QBanner'
       ],
 
       directives: [
@@ -93,7 +94,8 @@ module.exports = function (/* ctx */) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
+        'Dialog',
+        'LocalStorage'
       ]
     },
 

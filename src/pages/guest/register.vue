@@ -1,20 +1,20 @@
 <template>
 <q-page class="bg-indigo-3">
       <div class="row">
-        <q-card class="fixed-center col-md-4 col-xs-12 bg-white" style="height: 570px; weight: 600px">
+        <q-card class="fixed-center col-md-4 col-xs-12 bg-white" style="height: 500px; weight: 600px">
           <q-toolbar class="bg-primary glossy text-h4" style="color: white" >
            <q-toolbar-title class="text-h5 text-bold">Register Page</q-toolbar-title>
            </q-toolbar>
       <q-form
       @submit="onSubmit"
       @reset="onReset"
-      class="q-gutter-sm"
+      class="q-gutter-sm q-mt-lg"
     >
       <q-input
         standout="bg-indigo-11 text-white"
         class="col q-gutter-sm q-mr-sm"
         v-model="nama"
-        label="Masukkan Nama "
+        label="Masukkan Nama Lengkap"
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Masukkan Nama Anda!!!']"
       />
@@ -29,18 +29,10 @@
       <q-input
         standout="bg-indigo-11 text-white"
         class="col q-gutter-sm q-mr-sm"
-        v-model="prodi"
-        label="Masukkan Prodi"
+        v-model="email"
+        label="Masukkan E-Mail"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Masukkan Prodi Anda!!!']"
-      />
-      <q-input
-        standout="bg-indigo-11 text-white"
-        class="col q-gutter-sm q-mr-sm"
-        v-model="semester"
-        label="Masukkan Semester"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Masukkan Semester Anda!!!']"
+        :rules="[ val => val && val.length > 0 || 'Masukkan E-Mail Anda!!!']"
       />
       <q-input
         standout="bg-indigo-11 text-white"
@@ -51,9 +43,9 @@
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Ketik lhaa jangan mager']"
       />
-      <div class="q-ml-xl q-mt-sm q-mb-sm">
+      <div class="q-ml-lg q-mt-sm">
         <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-md" />
       </div>
     </q-form>
          </q-card>
@@ -67,8 +59,7 @@ export default {
       nama: null,
       password: null,
       npm: null,
-      semester: null,
-      prodi: null
+      email: null
     }
   },
   methods: {
@@ -76,8 +67,7 @@ export default {
       this.$axios.post('user/register', {
         name: this.nama,
         npm: this.npm,
-        semester: this.semester,
-        prodi: this.prodi,
+        email: this.email,
         password: this.password
       }).then((res) => {
         if (res.data.sukses) {
@@ -98,8 +88,7 @@ export default {
       this.nama = null
       this.password = null
       this.npm = null
-      this.semester = null
-      this.prodi = null
+      this.email = null
     }
   }
 }

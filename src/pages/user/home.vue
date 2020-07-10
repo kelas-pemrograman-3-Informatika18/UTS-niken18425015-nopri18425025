@@ -1,11 +1,27 @@
 <template>
-  <q-page padding >
+  <q-page padding>
+    <div class="row q-mb-md col-gutter-md">
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <div class="row">
+          <div class="col-auto">
+            <div class="left"></div>
+            </div>
+          <div class="col">
+            <q-banner inline-actions class="text-blue-grey-14">
+              <div class="text-h6">Jadwal Anda</div>
+              <div>Jadwal Yang Telah Anda Pilih</div>
+            </q-banner>
+          </div>
+        </div>
+      </div>
+    </div>
     <q-table
       title="Jadwal Anda"
       :data="data"
       :columns="columns"
       row-key="name"
       class="bg-light-blue-2"
+      flat
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -78,3 +94,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.left {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(3, 6, 51);
+}
+</style>

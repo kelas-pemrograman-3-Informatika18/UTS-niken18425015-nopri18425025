@@ -1,11 +1,26 @@
 <template>
   <q-page padding>
+    <div class="row q-mb-md col-gutter-md">
+      <div class="col-md-12 col-xs-12 col-lg-12">
+        <div class="row">
+          <div class="col-auto">
+            <div class="left"></div>
+            </div>
+          <div class="col">
+            <q-banner inline-actions class="text-blue-grey-14">
+              <div class="text-h6">Edit Jadwal</div>
+              <div>Pilih Jadwal Yang Ingin Di Edit</div>
+            </q-banner>
+          </div>
+        </div>
+      </div>
+    </div>
     <q-table
       title="Jadwal"
       :data="data"
       :columns="columns"
       row-key="name"
-       class="bg-light-blue-2"
+       flat
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -27,7 +42,10 @@
           <q-td key="aksi" :props="props">
             <div class="row">
               <div class="col">
-                <q-btn label="Hapus" color="negative" @click="confirm(props.row.kode)" icon="delete" unelevated></q-btn>
+                <q-btn label="Edit" :to="{ name: 'edit', params: {kode: props.row.kode}}" color="green" icon="edit" unelevated></q-btn>
+              </div>
+              <div class="col q-ml-sm">
+                <q-btn label="Hapus" color="negative" @click="confirm(props.row.kode)" icon="delete" unelevated style="width: 114px"></q-btn>
               </div>
             </div>
           </q-td>
@@ -67,7 +85,7 @@ export default {
   },
   methods: {
     getData () {
-      this.$axios.get('kegiatan/tampil')
+      this.$axios.get('jadwal/tampil')
         .then(res => {
           if (res.data.sukses) {
             this.data = res.data.data
@@ -86,7 +104,7 @@ export default {
         cancel: true,
         persistent: true
       }).onOk(() => {
-        this.$axios.delete('kegiatan/delete/' + kode)
+        this.$axios.delete('jadwal/delete/' + kode)
           .then((res) => {
             if (res.data.sukses) {
               this.$q.notify({
@@ -106,3 +124,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.left {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(46, 58, 216);
+}
+</style>

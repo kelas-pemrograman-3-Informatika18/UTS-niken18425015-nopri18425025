@@ -1,91 +1,81 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header unelevated>
-      <div class="q-gutter-y-sm">
-      <div class="bg-indigo-10 glossy text-white">
-      <q-toolbar class="text-h3" >
-        <q-btn flat dense round icon="menu" class="q-mr-sm" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
-        <q-icon name="schedule" />
-        <q-toolbar-title class="text-h4">myschedule.com</q-toolbar-title>
-        <q-space />
-        <q-btn label="About" icon="people" push color="blue-6" class="q-mr-xs" @click="toolbar = true" >
-        <q-dialog v-model="toolbar" persistent transition-show="flip-down" transition-hide="flip-up">
-      <q-card class="bg-grey-3 text-black">
-        <q-toolbar>
+    <q-header class="bg-white text-indigo-10">
+      <q-toolbar>
+        <q-btn dense flat round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu"/>
+        <q-space></q-space>
+        <q-btn flat round>
           <q-avatar>
-            <img src="https://nnconsultant.com/wp-content/uploads/2019/07/nn-logo-e1564420634472.png"
-            style=width:50px >
+          <q-img src="~assets/admin.png"/>
           </q-avatar>
-
-          <q-toolbar-title><span class="text-weight-bold">NN</span> Project</q-toolbar-title>
-
-          <q-btn flat round dense icon="close" v-close-popup />
-        </q-toolbar>
-
-        <q-card-section>
-          This project created by Muhammad Nopriansyah and Witatur Niken Pitriyani
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+          <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup @click="confirm()">
+              <q-item-section>Logout</q-item-section>
+            </q-item>
+          </q-list>
+          </q-menu>
         </q-btn>
-        <q-btn icon="logout" label="Logout" push color="red-14" class="q-mr-xs" @click="confirm" />
       </q-toolbar>
-        <q-toolbar inset>
-      </q-toolbar>
-    </div>
-      </div>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
-      content-class="bg-grey-3"
+      content-class="text-white bg-primary"
     >
-      <q-list>
-        <q-item-label
-          header
-          class="text-indigo-10"
-        >
-          Menu
-        </q-item-label>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'homeadm'}">
-          <q-item-section avatar>
-            <q-icon name="dashboard" />
-          </q-item-section>
-          <q-item-section>
-          Home
-          </q-item-section>
-        </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'tamppiljadwal'}">
-          <q-item-section avatar>
-            <q-icon name="schedule" />
-          </q-item-section>
-          <q-item-section>
-          Lihat Jadwal
-          </q-item-section>
-        </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'editJadwal'}">
-          <q-item-section avatar>
-            <q-icon name="edit" />
-          </q-item-section>
-          <q-item-section>
-          Edit Jadwal
-          </q-item-section>
-        </q-item>
-        <q-item clickable active-class="active" exact v-ripple :to="{ name: 'inputJadwal'}">
-          <q-item-section avatar>
-            <q-icon name="input" />
-          </q-item-section>
-          <q-item-section>
-          Input Jadwal
-          </q-item-section>
-        </q-item>
-      </q-list>
+      <q-scroll>
+        <q-scroll-area class="fit">
+          <q-list>
+            <q-item class="justify-center text-center q-mt-md q-mb-md">
+              <div>
+                <q-avatar size="120px">
+                  <q-img src="~assets/admin.png"/>
+                </q-avatar>
+                <div class="text-weight-bold q-mt-md"> {{ $q.localStorage.getItem('datauser').name }} </div>
+                <div>Aplikasi Susun Jadwal</div>
+              </div>
+            </q-item>
+
+            <q-item clickable active-class="active" v-ripple exact :to="{ name: 'homeadm' }">
+              <q-item-section avatar>
+                <q-icon name="dashboard"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Dashboard</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable active-class="active" v-ripple exact :to="{ name: 'tamppiljadwal' }">
+              <q-item-section avatar>
+                <q-icon name="schedule"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Lihat Jadwal</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable active-class="active" v-ripple exact :to="{ name: 'inputJadwal' }">
+              <q-item-section avatar>
+                <q-icon name="input"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Input Jadwal</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item clickable active-class="active" v-ripple exact :to="{ name: 'editJadwal'}">
+              <q-item-section avatar>
+                <q-icon name="edit"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Edit Jadwal</q-item-label>
+              </q-item-section>
+            </q-item>
+
+          </q-list>
+        </q-scroll-area>
+      </q-scroll>
     </q-drawer>
 
-    <q-page-container class="bg-white">
-
+    <q-page-container class="bg-grey-1">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -93,6 +83,16 @@
 
 <script>
 export default {
+  name: 'MainLayout',
+
+  components: {
+  },
+
+  data () {
+    return {
+      leftDrawerOpen: false
+    }
+  },
   methods: {
     confirm () {
       this.$q.dialog({
@@ -101,16 +101,17 @@ export default {
         cancel: true,
         persistent: true
       }).onOk(() => {
-        this.$router.push({ name: 'pilih' })
+        this.$q.localStorage.remove()
+        this.$router.push({ name: 'login' })
       })
-    }
-  },
-  name: 'MainLayout',
-  data () {
-    return {
-      leftDrawerOpen: true,
-      toolbar: false
     }
   }
 }
 </script>
+<style scoped>
+.active{
+  color: #000;
+  background: #fafafa;
+  padding-right: 10px;
+}
+</style>
